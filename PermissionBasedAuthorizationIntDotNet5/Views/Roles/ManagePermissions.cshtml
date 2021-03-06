@@ -1,0 +1,49 @@
+﻿@model PermissionsFormViewModel
+
+@{
+    ViewData["Title"] = "Manage Permissions";
+}
+
+<form asp-action="ManagePermissions" method="post">
+    <div class="card mt-4">
+        <div class="card-header">
+            <h2>@Model.RoleName</h2>
+            Add/Remove Permissions
+        </div>
+        <div class="card-body">
+            <input type="hidden" asp-for="RoleId" />
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Module</th>
+                        <th>Permission</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.RoleCalims.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                <div class="form-check m-1">
+                                    <input type="hidden" asp-for="@Model.RoleCalims[i].DisplayValue" />
+                                    <input asp-for="@Model.RoleCalims[i].IsSelected" class="form-check-input" />
+                                    @*<label class="form-check-label" asp-for="@Model.Roles[i].IsSelected">
+                                            @Model.Roles[i].DisplayValue
+                                        </label>*@
+                                </div>
+                            </td>
+                            <td>@Model.RoleCalims[i].DisplayValue.Split('.')[1]</td>
+                            <td>@Model.RoleCalims[i].DisplayValue.Split('.')[2]</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div asp-validation-summary="All" class="text-danger"></div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </div>
+    </div>
+</form>

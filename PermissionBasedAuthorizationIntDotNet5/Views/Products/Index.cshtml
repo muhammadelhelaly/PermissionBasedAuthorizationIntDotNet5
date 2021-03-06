@@ -1,0 +1,30 @@
+﻿@inject IAuthorizationService AuthorizationService
+
+@using PermissionBasedAuthorizationIntDotNet5.Contants
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<h1>Manage Products</h1>
+<hr />
+
+@if (AuthorizationService.AuthorizeAsync(User, Permissions.Products.View).Result.Succeeded)
+{
+    <a href="#" class="btn btn-primary">View</a>
+}
+
+@if (AuthorizationService.AuthorizeAsync(User, Permissions.Products.Create).Result.Succeeded)
+{
+    <a href="#" class="btn btn-secondary">Create</a>
+}
+
+@if (AuthorizationService.AuthorizeAsync(User, Permissions.Products.Edit).Result.Succeeded)
+{
+    <a asp-action="Edit" class="btn btn-success">Edit</a>
+}
+
+@if (AuthorizationService.AuthorizeAsync(User, Permissions.Products.Delete).Result.Succeeded)
+{
+    <a href="#" class="btn btn-danger">Delete</a>
+}
